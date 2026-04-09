@@ -1,26 +1,35 @@
 pipeline {
     agent any
+    environment {
+        
+        DOCKER_USER = 'venkata.krishna2023@vitstudent.ac.in'
+        IMAGE_NAME = 'static-web'
+    }
     stages {
         stage('Checkout') {
-            steps { git 'https://github.com/venkatakrishna2023-source/agile-4.git' }
+            steps {
+                // Uses the branch and URL configured in the Jenkins Job UI
+                checkout scm
+            }
         }
         stage('Docker Build') {
-            steps { sh 'docker build -t your-docker-id/static-web:latest .' }
+            steps {
+                bat "docker build -t %DOCKER_USER%/%IMAGE_NAME%:latest ."
+            }
         }
         stage('Docker Push') {
-    steps {
-        // 'docker-hub-id' is the nickname you created in Step 1
-        // 'USER' and 'PASS' are temporary nicknames for this script
-        withCredentials([usernamePassword(credentialsId: 'docker-hub-id', usernameVariable: 'venkata.krishna2023@vitstudent.ac.in', passwordVariable: '#spidyJvk#15')]) {
-            bat "docker login -u %USER% -p %PASS%"
-            
-            // Replace 'your-docker-id' with your actual Docker Hub username
-            bat 'docker push venkat23mis0428/static-web:latest'
+            steps {
+                // Uses the 'docker-hub-id' you created in Manage Jenkins > Credentials
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-id', usernameVariable: 'venkata.krishna2023@vitstudent.ac.in', passwordVariable: '#spidyJvk#15')]) {
+                    bat "docker login -u %USER% -p %PASS%"
+                    bat "docker push %DOCKER_USER%/%IMAGE_NAME%:latest"
+                }
+            }
         }
-    }
-}
         stage('K8s Deploy') {
-            steps { sh 'kubectl apply -f k8s-deployment.yaml' }
+            steps {
+                bat "kubectl apply -f k8s-deployment.yaml"
+            }
         }
     }
 }
