@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         
-        DOCKER_USER = 'venkata.krishna2023@vitstudent.ac.in'
+        DOCKER_USER = 'venkat23mis0428'
         IMAGE_NAME = 'static-web'
     }
     stages {
