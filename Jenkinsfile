@@ -8,7 +8,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Uses the branch and URL configured in the Jenkins Job UI
                 checkout scm
             }
         }
@@ -19,8 +18,8 @@ pipeline {
         }
         stage('Docker Push') {
     steps {
-        withCredentials([usernamePassword(credentialsId: 'docker-hub-id', usernameVariable: 'venkata.krishna2023@vitstudent.ac.in', passwordVariable: '#spidyJvk#15')]) {
-            // Note: On Windows, use double quotes and the exact variable names
+        withCredentials([usernamePassword(credentialsId: 'docker-hub-id', usernameVariable: 'venkatakrishna2023', passwordVariable: '#spidyJvk#15')]) {
+           
             bat "docker login -u %DOCKER_USER% -p %DOCKER_PASS%"
             bat "docker push %DOCKER_USER%/static-web:latest"
         }
