@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
       - name: static-web-container
-        # Replace 'your-docker-id' with your actual Docker Hub username
         image: venkat23mis0428/static-web:latest
         ports:
         - containerPort: 80
