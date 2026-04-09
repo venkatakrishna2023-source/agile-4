@@ -18,14 +18,14 @@ pipeline {
             }
         }
         stage('Docker Push') {
-            steps {
-                // Uses the 'docker-hub-id' you created in Manage Jenkins > Credentials
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-id', usernameVariable: 'venkata.krishna2023@vitstudent.ac.in', passwordVariable: '#spidyJvk#15')]) {
-                    bat "docker login -u %USER% -p %PASS%"
-                    bat "docker push %DOCKER_USER%/%IMAGE_NAME%:latest"
-                }
-            }
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'docker-hub-id', usernameVariable: 'venkata.krishna2023@vitstudent.ac.in', passwordVariable: '#spidyJvk#15')]) {
+            // Note: On Windows, use double quotes and the exact variable names
+            bat "docker login -u %DOCKER_USER% -p %DOCKER_PASS%"
+            bat "docker push %DOCKER_USER%/static-web:latest"
         }
+    }
+}
         stage('K8s Deploy') {
             steps {
                 bat "kubectl apply -f k8s-deployment.yaml"
