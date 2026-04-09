@@ -29,4 +29,4 @@ spec:
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 8087 # Access your web page at http://<node-ip>:30007
+      nodePort: 8087 
